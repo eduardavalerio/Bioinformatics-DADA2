@@ -1,4 +1,4 @@
-# Bioinformatics-DADA2 🐠
+# Bioinformatics - DADA2 🐠
 
 ### DADA2 pipeline
 
