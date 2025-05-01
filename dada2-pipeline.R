@@ -52,3 +52,18 @@ library(DECIPHER)
 library(phangorn)
 library(speedyseq)
 
+##Creating filepaths to data
+#after cutadapt step
+path <- "/Volumes/Extreme Pro/uk-data/dada2/lib1/"  #Where the trimmed sequences are
+#
+#path <- "/Users/quinteroh/Library/CloudStorage/OneDrive-SmithsonianInstitution/eCSI 1st Library/Trimmed_sequences/article_filtered/"
+head(list.files(path)) #eventually to check if the path works
+
+
+##File preparation
+#extracting Forward (fnFs) and Reverse (fnRs) reads from files
+fnFs <- sort(list.files(path, pattern = "lib1_forward_trimmed.fastq"))
+fnRs <- sort(list.files(path, pattern = "lib1_reverse_trimmed.fastq"))
+sample.names <- sapply(strsplit(fnFs, "_"), `[`, 1)
+fnFs <-file.path(path, fnFs)
+fnRs <-file.path(path, fnRs)
