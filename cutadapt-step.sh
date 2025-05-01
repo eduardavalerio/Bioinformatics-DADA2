@@ -10,7 +10,7 @@ cutadapt --version
 #should show the cutadapt version number 
 #5.0
 
-cutadapt -a <primer-forward> -o lib1_forward_trimmed.fastq input1.fq.gz --discard-untrimmed -e 0.12
-cutadapt -g <primer-reverse> -o lib1_reverse_trimmed.fastq input2.fq.gz --discard-untrimmed -e 0.12
+cutadapt -a AAACTCGTGCCAGCCACC -A GGGTATCTAATCCCAGTTTG -o lib1_1_trimmed.fastq -p lib1_2_trimmed.fastq lib1_1.fq.gz lib1_2.fq.gz
+
 
 
