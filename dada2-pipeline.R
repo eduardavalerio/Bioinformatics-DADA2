@@ -1,5 +1,6 @@
 #####################################################
 ### DADA2 R script - eDNA bioinformatics analysis ###
+### SCRIPT prepared by Matthieu Leray ###############
 ### Modified by Eduarda Valerio de Jesus ############
 ### May 2025 ########################################
 #####################################################
@@ -59,11 +60,33 @@ path <- "/Volumes/Extreme Pro/uk-data/dada2/lib1/"  #Where the trimmed sequences
 #path <- "/Users/quinteroh/Library/CloudStorage/OneDrive-SmithsonianInstitution/eCSI 1st Library/Trimmed_sequences/article_filtered/"
 head(list.files(path)) #eventually to check if the path works
 
-
 ##File preparation
 #extracting Forward (fnFs) and Reverse (fnRs) reads from files
-fnFs <- sort(list.files(path, pattern = "lib1_forward_trimmed.fastq"))
-fnRs <- sort(list.files(path, pattern = "lib1_reverse_trimmed.fastq"))
+fnFs <- sort(list.files(path, pattern = "lib1_1_trimmed.fastq"))
+fnRs <- sort(list.files(path, pattern = "lib1_2_trimmed.fastq"))
 sample.names <- sapply(strsplit(fnFs, "_"), `[`, 1)
 fnFs <-file.path(path, fnFs)
 fnRs <-file.path(path, fnRs)
+
+#plotting quality profiles
+
+qprofile_fwd <- plotQualityProfile(fnFs, aggregate = TRUE)
+print(qprofile_fwd) + ggtitle("Forward")
+
+qprofile_rev <- plotQualityProfile(fnRs, aggregate = TRUE)
+print(qprofile_rev) + ggtitle("Reverse")
+
+#placing filtered files in a new filtered subdirectory
+filtFs <- file.path(path, "filtered", paste0(sample.names, "_F_filt.fastq"))
+filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq"))
+names(filtFs) <- sample.names
+names(filtRs) <- sample.names
+
+
+#filtering and trimming, here truncation at 180 (Fwd) and 150 (Rev) bp,  
+#2expected errors max (N discarded automatically)  #Truncation length depends on what the qprofile graphs showed
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(180,150),
+                     maxN=0, maxEE=2, truncQ=2, rm.phix=TRUE,
+                     compress=TRUE, multithread=TRUE)
+
+head(out) #eventually to check how filtering and trimming worked
