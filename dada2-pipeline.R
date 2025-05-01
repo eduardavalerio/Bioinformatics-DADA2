@@ -82,11 +82,37 @@ filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq"))
 names(filtFs) <- sample.names
 names(filtRs) <- sample.names
 
+#Check read length distribution before filtering
+library(ShortRead)
+hist(width(readFastq(fnFs[1])), breaks = 50, main = "Forward Read Lengths")
+hist(width(readFastq(fnRs[1])), breaks = 50, main = "Reverse Read Lengths")
 
 #filtering and trimming, here truncation at 180 (Fwd) and 150 (Rev) bp,  
 #2expected errors max (N discarded automatically)  #Truncation length depends on what the qprofile graphs showed
-out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(180,150),
-                     maxN=0, maxEE=2, truncQ=2, rm.phix=TRUE,
-                     compress=TRUE, multithread=TRUE)
+out <- filterAndTrim(
+  fnFs, filtFs,          # Input and output files (forward)
+  fnRs, filtRs,          # Input and output files (reverse)
+  truncLen = c(150, 140), # Forward truncated at 160 bp, reverse at 140 bp -> this changes according to reads length (~150bp)
+  maxN = 0,              # Discard reads with ambiguous bases (N)
+  maxEE = c(3, 5),       # Allow ≤3 expected errors (forward), ≤5 (reverse)
+  truncQ = 10,           # Trim at quality score ≤10 (less aggressive than Q=2)
+  minLen = 50,           # Keep reads ≥50 bp after trimming
+  rm.phix = TRUE,        # Remove PhiX control reads
+  compress = TRUE,       # Output compressed .fastq.gz files
+  multithread = TRUE     # Use multiple cores for speed
+)
 
 head(out) #eventually to check how filtering and trimming worked
+
+#If not all samples had sequences after filtering, keep only the ones that do
+exists0<- file.exists(filtFs) & file.exists(filtRs) #Check which samples were written in the directory
+#Keep only the samples with reads after filtration
+filtFs <- filtFs[exists0]
+filtRs <- filtRs[exists0]
+
+#learning error rates
+errF <- learnErrors(filtFs, multithread = TRUE)
+errR <- learnErrors(filtRs, multithread = TRUE)
+#plotting errors
+plotErrors(errF, nominalQ=TRUE)
+plotErrors(errR, nominalQ=TRUE)
