@@ -10,7 +10,8 @@ cutadapt --version
 #should show the cutadapt version number 
 #5.0
 
-cutadapt -a AAACTCGTGCCAGCCACC -A GGGTATCTAATCCCAGTTTG -o lib1_1_trimmed.fastq -p lib1_2_trimmed.fastq lib1_1.fq.gz lib1_2.fq.gz
+cutadapt -a AAACTCGTGCCAGCCACC -A GGGTATCTAATCCCAGTTTG -o lib1_1_trimmed.fastq -p lib1_2_trimmed.fastq --minimum-length=130 --quality-cutoff=30 --max-n=0 lib1_1.fq.gz lib1_2.fq.gz
+
 
 
 
