@@ -15,3 +15,4 @@ DADA2 is an R-based pipeline designed for high-resolution processing of amplicon
 ![image](https://github.com/user-attachments/assets/fcaa891c-dc5e-4977-b82c-25c49b19cdf4)
 
 [DADA2 Documentation](https://benjjneb.github.io/dada2/tutorial.html)
+[Cutadapt Documentation](https://cutadapt.readthedocs.io/en/stable/)
