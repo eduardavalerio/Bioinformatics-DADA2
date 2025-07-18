@@ -43,6 +43,7 @@ head -n1 taxmap.tsv | cat -A  # Should show `^I` for tabs
 # Count incomplete taxonomies
 awk -F'\t' '$2 !~ /;/ {print}' taxmap.tsv | wc -l
 
+# Python
 # Run CRABS to generate the .rdp
 crabs build_database \
   --input MitoFish.fasta \
