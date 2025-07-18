@@ -1,7 +1,7 @@
-##################################################################################################
-##### This script is to create a Reference Sequences to use in Taxonomic Assignment in DADA2 #####
-##### Created by Eduarda V. de Jesus - July 2025 #################################################
-##################################################################################################
+###################################################################################################
+####### Script to create a Reference Sequences File to use in Taxonomic Assignment in DADA2 #######
+##### Created by Eduarda V. de Jesus - July 2025 ##################################################
+################################################################################################### 
 
 
 # Install references sequencences in MitoFish database 
