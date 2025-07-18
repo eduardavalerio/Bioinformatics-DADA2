@@ -1,3 +1,9 @@
+##################################################################################################
+##### This script is to create a Reference Sequences to use in Taxonomic Assignment in DADA2 #####
+##### Created by Eduarda V. de Jesus - July 2025 #################################################
+##################################################################################################
+
+
 # Install references sequencences in MitoFish database 
 # We're gonna use the all mitogenomes files 
 
@@ -9,7 +15,7 @@ cat *.fa > MitoFish.fasta
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
 tar -xzvf taxdump.tar.gz
 
-# Proceed in the script in python
+# Proceed in python
 ipython
 
 
