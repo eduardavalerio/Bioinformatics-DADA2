@@ -23,7 +23,7 @@ OR "Actinopterygii"[Organism] OR "Myxini"[Organism] OR "Hyperoartia"[Organism] O
 crabs db_merge -o merged.fasta -u yes -i ncbi12Sfish.fasta mitofish.fasta
 
 # STEP 3 - EXTRACT AMPLICONS THROUGH IN SILICO PCR
-# In my case, this step I was in troubles bc was returning the error - OverflowError: FASTA/FASTQ record does not fit into buffer
+# In my case, this step was returning the error - OverflowError: FASTA/FASTQ record does not fit into buffer
 # I filtered sequences longer than 10kb (PCR typically doesn't amplify >10kb)
 conda install -c bioconda seqkit
 seqkit seq -M 10000 merged.fasta > filtered.fasta 
