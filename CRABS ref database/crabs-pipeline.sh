@@ -68,7 +68,7 @@ head -n 4 db12S_rdp.fasta
 # >LC878664	root;nan;Chordata;Actinopteri;Cypriniformes;Gobionidae;Hemibarbus;Hemibarbus_labeo
 # GCGGTTAAACGAGAGGCCCTAGTTGATATTATTACGGCGTAAAGGGTGGTTAAGGAAAGCACAACAATAAAGCCGAATGGCCCTCTGGCCGTCATACGC
 
-# It is ok to do that?
+# Is it ok to do that?
 awk 'BEGIN{FS="\t|;";OFS=";"} 
      /^>/ {
        print $1 ";tax=d:Eukaryota,p:" $4 ",c:" $5 ",o:" $6 ",f:" $7 ",g:" $8 ",s:" $9
