@@ -29,6 +29,7 @@ conda install -c bioconda seqkit
 seqkit seq -M 10000 merged.fasta > filtered.fasta 
 
 crabs insilico_pcr -i filtered.fasta -o merged_insilico.fasta -f AAACTCGTGCCAGCCACC -r GGGTATCTAATCCCAGTTTG #Teleo2 primer fwr and rev
+# found primers in 7 sequences -> Is this a problem?
 
 # STEP 4 - EXTRACT AMPLICONS THROUGH PAIRWISE GLOBAL ALIGNMENTS
 crabs pga -i merged.fasta -o merged_insilicopga.fasta -db merged_insilico.fasta -f AAACTCGTGCCAGCCACC -r GGGTATCTAATCCCAGTTTG
