@@ -95,10 +95,10 @@ print(out)
 
 
 
-#I'm not putting # in all of the following but they are comments
 #My results:
 #> print(out)
 #                                         reads.in  reads.out  #it takes under consideration the PAIR of reads, and not only the R1, it analyzes R2 as well even though it doesn't appear in the table below.
+'''
 BI-23-B10_S199_L001_R1_001.trimmed.fastq    48394     43280
 BI-23-B11_S207_L001_R1_001.trimmed.fastq    46610     43082
 BI-23-B12_S215_L001_R1_001.trimmed.fastq    59205     53316
@@ -195,7 +195,7 @@ SI-23-T26_S242_L001_R1_001.trimmed.fastq    54524     48769
 SI-23-T27_S250_L001_R1_001.trimmed.fastq    33239     29112
 SI-23-T8_S193_L001_R1_001.trimmed.fastq     42620     38154
 SI-23-T9_S201_L001_R1_001.trimmed.fastq     59381     52853
-
+'''
 
 
 
