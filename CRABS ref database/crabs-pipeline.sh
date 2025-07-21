@@ -1,10 +1,21 @@
 # Create virtual environment for CRABS and dowload all packages required 
 conda create -n crabs-env
 conda activate crabs-env
-conda install -c conda-forge xopen=1.6.0
-conda install -c bioconda cutadapt=4.4
-conda install -c bioconda vsearch
-pip install crabs 
+# Install CRABS
+git clone https://github.com/gjeunen/reference_database_creator.git
+# Install python packages 
+pip install requests
+pip install rich
+pip install rich-click
+pip install matplotlib
+pip install numpy
+
+# Install external softwares programs
+brew install blast
+pip install cutadapt
+brew install vsearch
+conda install bioconda::clustalw
+conda install bioconda::fasttree
 
 # Check the installation
 crabs -h
