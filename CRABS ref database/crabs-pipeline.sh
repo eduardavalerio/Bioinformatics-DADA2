@@ -23,12 +23,19 @@ crabs -h
 # Before start check if you're in the right paste to save all the files 
 # I'm gonna use the MitoFish database and NCBI 
 
-# STEP 1 - DOWNLOAD SEQUENCE DATA 
-crabs db_download -s mitofish -o mitofish.fasta 
+# STEP 1 - DOWNLOAD SEQUENCE DATA FROM ONLINE REPOSITORIES AND TAXONOMY FROM NCBI
+crabs --download-mitofish --output mitofish.fasta
 
-crabs db_download -s ncbi -db nucleotide -q '12S[All Fields] AND ("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] 
-OR "Actinopterygii"[Organism] OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR fish[All Fields])'
--o ncbi12Sfish.fasta -e eduarda.jesus@usp.br
+crabs --download-taxonomy --exclude 'acc2taxid, taxdump'
+crabs --download-taxonomy --output ncbi_taxonomy #ncbi_taxonomy is a subdirectory that I crated -> mkdir ncbi_taxonomy 
+
+
+
+
+
+#crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] 
+#OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR Fish[All Fields]) AND 12S[All Fields]' 
+#--output ncbi_fish12s.fasta --email eduarda.jesus@usp.br --database nucleotide
 
 # STEP 2 - MERGE DOWLOADED SEQUENCES
 crabs db_merge -o merged.fasta -u yes -i ncbi12Sfish.fasta mitofish.fasta
