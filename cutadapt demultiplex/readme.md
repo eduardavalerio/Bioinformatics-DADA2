@@ -3,7 +3,7 @@
 [Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet. journal, 17(1), 10-12.](https://journal.embnet.org/index.php/embnetjournal/article/view/200)
 - [Cutadapt](https://cutadapt.readthedocs.io/en/stable/guide.html#demultiplexing)
 
-```bash
+```
 cutadapt version 5.0
 
 Copyright (C) 2010 Marcel Martin <marcel.martin@scilifelab.se> and contributors
