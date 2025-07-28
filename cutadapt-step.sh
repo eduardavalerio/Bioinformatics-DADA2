@@ -235,7 +235,7 @@ cutadapt --help
 #                        Write second read in a pair to this file if pair is too
 #                        long.
 
-cutadapt -e 1 -m 1 -g file:barcode.fasta -o EVLA_R1.fastq.gz -p EVLA_R2.fastq.gz 
+cutadapt -e 1 -m 1 -g file:barcode.fasta -o EVLA_R1.fastq.gz -p EVLA_R2.fastq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_1.fq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_2.fq.gz
 
 # -e 1 = at least one mismatch in barcode
 # -m 1 = remove reads that the lenght is zero. 
