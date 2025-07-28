@@ -1,6 +1,7 @@
 # Cutadapt pipeline (step before DADA2)
 # Demultiplex step 
 # https://cutadapt.readthedocs.io/en/stable/index.html
+# https://cutadapt.readthedocs.io/en/stable/guide.html#demultiplexing
 
 # Install cutadapt with conda in a new environment 
 conda create -n cutadapt cutadapt
@@ -20,8 +21,7 @@ cutadapt -g CACTCTTTCCCTACACGACGCTCTTCCGATCTTAGARTCTTTGAACGCAAATGGC -G GTGACTGGA
 
 for file in *_R1.fastq.gz; do echo "$file: $(cat $file | wc -l) reads"; done
 
-##remover arquivos com poucos dados fq.gz
-
+# remove fq.gz files with low data
 rm -f *.fq.gz
 
 
