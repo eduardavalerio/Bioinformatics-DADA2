@@ -23,7 +23,7 @@ crabs -h # In my case shown "command not found" so I needed to add the crabs scr
 # HOW TO ADD CRABS IN YOUR PATH
 ls -l crabs.py  # Look for crabs.py
 chmod +x crabs  # Make it executable
-./crabs -h # Run directly, if it works you can add in your oath permanently
+./crabs -h # Run directly, if it works you can add in your path permanently
 echo $(pwd)
 export PATH="$PATH:/Users/eduardavalerio/reference_database_creator" # Replace /Users/eduarda...
 source ~/.bashrc # Reload the shell
@@ -37,20 +37,16 @@ crabs -h # Should now work from anywhere
 # STEP 1 - DOWNLOAD SEQUENCE DATA FROM ONLINE REPOSITORIES AND TAXONOMY FROM NCBI
 # Reference sequences
 crabs --download-mitofish --output mitofish.fasta
-crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] OR "Myxini"[Organism] 
-OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR Fish[All Fields]) AND 12S[All Fields]' --output ncbi_fish12s.fasta 
---email eduarda.jesus@usp.br --database nucleotide # need a lot of computer capacity -> I didn't dowload
+crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR Fish[All Fields]) AND 12S[All Fields]' --output ncbi_fish12s.fasta --email eduarda.jesus@usp.br --database nucleotide # need a lot of computer capacity -> I didn't dowload
 # Taxonomy from NCBI
 crabs --download-taxonomy --exclude 'acc2taxid, taxdump'
 crabs --download-taxonomy --output ncbi_taxonomy #ncbi_taxonomy is a subdirectory that I crated -> mkdir ncbi_taxonomy 
 
 # STEP 2 - IMPORT DOWNLOADED DATA INTO CRABS FORMAT
 # mitofish
-crabs --import --import-format mitofish --input mitofish.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp
---acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_mitofish.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
+crabs --import --import-format mitofish --input mitofish.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_mitofish.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 # ncbi - If downloaded 
-crabs --import --import-format ncbi --input nci.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp
---acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_ncbi.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
+crabs --import --import-format ncbi --input nci.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_ncbi.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 
 # STEP 3 - MERGE DOWLOADED SEQUENCES
 # This step is just when sequence data from multiple online repositories are downloaded. After import the data in crabs format step.
@@ -66,8 +62,7 @@ crabs --in-silico-pcr --input crabs_mitofish.txt --output insilico.txt --forward
 # Results | 7582 amplicons were extracted by only the forward or reverse primer (25.31%)
 
 # STEP 5 - RETRIEVE AMPLICONS WITHOUT PRIMER-BINDING REGIONS - this step take some time 
-crabs --pairwise-global-alignment --input crabs_mitofish.txt --amplicons insilico.txt --output aligned.txt --forward AAACTCGTGCCAGCCACC 
---reverse GGGTATCTAATCCCAGTTTG --size-select 10000 --percent-identity 0.95 --coverage 95
+crabs --pairwise-global-alignment --input crabs_mitofish.txt --amplicons insilico.txt --output aligned.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --size-select 10000 --percent-identity 0.95 --coverage 95
 
 # STEP 6 - CURATE AND SUBSET THE LOCAL DATABASE VIA MULTIPLE FILTERING PARAMETERS 
 # 6.1 - Dereplicade - Remove identical reference barcodes to speed up taxonomy assignment, as well as improve taxonomy assignment results.
