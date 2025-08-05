@@ -11,7 +11,7 @@ cutadapt --version
 # cutadapt version 5.0
 
 # To create the barcode.fasta file just follow convert_fasta.py 
-cutadapt -e 1 -m 1 -g file:barcode.fasta -o {name}_R1.fastq.gz -p {name}_R2.fastq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_1.fq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_2.fq.gz
+cutadapt -e 1 -m 1 -g file:tags.fasta -o {name}_R1.fastq.gz -p {name}_R2.fastq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_1.fq.gz EV_Lib1_EKDL240035764-1A_22F3HCLT4_L6_2.fq.gz
 
 # -e 1 = at least one mismatch in barcode
 # -m 1 = remove reads that the lenght is zero. 
