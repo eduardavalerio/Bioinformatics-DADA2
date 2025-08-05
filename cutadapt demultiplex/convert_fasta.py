@@ -12,12 +12,12 @@ with open(input_file, "r") as f_in, open(output_file, "w") as f_out:
         line = line.strip()
         if ":" in line:  # Skip lines without colons (if any)
             seq_part = line.split(":")[0].upper()  # Take left of ":", uppercase
-            f_out.write(f">barcode{i}\n{seq_part}\n")  # Write FASTA entry
+            f_out.write(f">tag{i}\n{seq_part}\n")  # Write FASTA entry
 
 # Output 
-# >barcode01
+# >tag01
 # AAAAAAAA
-# >barcode02
+# >tag02
 # AAAAACCC
-# >barcode03
+# >tag03
 # GCAATTTT
