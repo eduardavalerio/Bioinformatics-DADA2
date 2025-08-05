@@ -3,8 +3,8 @@
 # aaaaaccc:aaaaaccc
 # gcaatttt:gcaatttt
 
-input_file = "barcodes.txt"    # Your input file
-output_file = "barcodes_lib1.fasta"  # Output FASTA file
+input_file = "tags.txt"    # Your input file
+output_file = "tags_lib1.fasta"  # Output FASTA file
 start_number = 1            # Set the number of barcode (e.g., 1 for >barcode1, 2 for >barcode2, etc.)
 
 with open(input_file, "r") as f_in, open(output_file, "w") as f_out:
