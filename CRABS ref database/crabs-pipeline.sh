@@ -29,7 +29,15 @@ crabs -h
 # STEP 1 - DOWNLOAD SEQUENCE DATA FROM ONLINE REPOSITORIES AND TAXONOMY FROM NCBI
 # Reference sequences
 crabs --download-mitofish --output mitofish.fasta
-crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR Fish[All Fields]) AND 12S[All Fields]' --output ncbi_fish12s.fasta --email eduarda.jesus@usp.br --database nucleotide # need a lot of computer capacity -> I didn't dowload
+
+# The file is to heavy when download all fish sequences, causing error in step 4
+# I use a geography filter as well (brazil, south atlantic, south america)
+# ("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] 
+# OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR 
+# fish[All Fields]) AND south[All Fields] OR atlantic[All Fields] OR brazil[All Fields] 
+# OR (("south"[All Fields] AND "america"[All Fields]) OR "south america"[All Fields]) 
+# AND 12S[All Fields]
+crabs --download-ncbi --query '("Chondrichthyes"[Organism] OR "Dipnomorpha"[Organism] OR "Actinopterygii"[Organism] OR "Myxini"[Organism] OR "Hyperoartia"[Organism] OR "Coelacanthimorpha"[Organism] OR fish[All Fields]) AND south[All Fields] OR atlantic[All Fields] OR brazil[All Fields] OR (("south"[All Fields] AND "america"[All Fields]) OR "south america"[All Fields]) AND 12S[All Fields]' --output ncbi_fish12s.fasta --email eduarda.jesus@usp.br --database nucleotide
 # Taxonomy from NCBI
 crabs --download-taxonomy --exclude 'acc2taxid, taxdump'
 crabs --download-taxonomy --output ncbi_taxonomy #ncbi_taxonomy is a subdirectory that I crated -> mkdir ncbi_taxonomy 
@@ -42,19 +50,18 @@ crabs --import --import-format ncbi --input nci.fasta --names ncbi_taxonomy/name
 
 # STEP 3 - MERGE DOWLOADED SEQUENCES
 # This step is just when sequence data from multiple online repositories are downloaded. After import the data in crabs format step.
-# Not my case
 crabs --merge --input 'crabs_mitofish.txt;crabs_ncbi.txt' --uniq --output merged.txt
 
 # STEP 4 - EXTRACT AMPLICONS REGIONS THROUGH IN SILICO PCR ANALYSIS
-crabs --in-silico-pcr --input crabs_mitofish.txt --output insilico.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG
+crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG
 # Using the command above the in silico PCR will add the amplicon in the --output just if either, the forward and reverse, primer-binding region is found.
 # In my case,  Results | Extracted 22371 amplicons from 883769 sequences (2.53%), just 2.5% of the sequences was added in output 
 # Using the parameter --relaxed the amplicon will be added in --output if the forward OR reverse primer-binding region will be finded.
-crabs --in-silico-pcr --input crabs_mitofish.txt --output insilico.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --relaxed
+crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --relaxed
 # Results | 7582 amplicons were extracted by only the forward or reverse primer (25.31%)
 
 # STEP 5 - RETRIEVE AMPLICONS WITHOUT PRIMER-BINDING REGIONS - this step take some time 
-crabs --pairwise-global-alignment --input crabs_mitofish.txt --amplicons insilico.txt --output aligned.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --size-select 10000 --percent-identity 0.95 --coverage 95
+crabs --pairwise-global-alignment --input merged.txt --amplicons insilico.txt --output aligned.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --size-select 10000 --percent-identity 0.95 --coverage 95
 
 # STEP 6 - CURATE AND SUBSET THE LOCAL DATABASE VIA MULTIPLE FILTERING PARAMETERS 
 # 6.1 - Dereplicade - Remove identical reference barcodes to speed up taxonomy assignment, as well as improve taxonomy assignment results.
@@ -81,14 +88,14 @@ crabs --subset --input filtered.txt --output subset.txt --include 'Chordata'
 # --export-format 'idt-fasta' and --export-format 'idt-text': The IDTAXA classifier is a machine learning algorithm incorporated in the DECIPHER R package;
 # --export-format 'blast-notax': Creates a local BLAST reference database for blastn and megablast where the output does not provide a taxonomic ID, but lists the accession number;
 # --export-format 'blast-tax': Creates a local BLAST reference database for blastn and megablast where the output provides both the taxonomic ID and accession number.
-crabs --export --input subset.txt --output 12s_mitofishdb_rdp.fasta --export-format 'rdp'
+crabs --export --input subset.txt --output 12s_merged_rdp.fasta --export-format 'rdp'
 
 # STEP 8 - POST-PROCESSING FUNCTIONS TO EXPLORE AND PROVIDE A SUMMARY OVERVIEW OF THE LOCAL REFERENCE DATABASE
 # CRABS can run five post-processing functions to explore and provide a summary overview of the local reference database, including 
 # (i) --diversity-figure, (ii) --amplicon-length-figure, (iii) --phylogenetic-tree, (iv) --amplification-efficiency-figure, and (v) --completeness-table
 
-crabs --diversity-figure --input subset.txt --output diversity-figure.png --tax-level 4 # (i)
-crabs --amplicon-length-figure --input subset.txt --output amplicon-length-figure.png --tax-level 4 # (ii)
+crabs --diversity-figure --input subset.txt --output diversity-figure-merged.png --tax-level 4 # (i)
+crabs --amplicon-length-figure --input subset.txt --output amplicon-length-figure-merged.png --tax-level 4 # (ii)
 crabs --phylogenetic-tree --input subset.txt --output phylo --tax-level 4 --species 'Carcharodon carcharias+Squalus acanthias' # (iii)
-crabs --amplification-efficiency-figure --input crabs_mitofish.txt --amplicons subset.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --output amplification-efficiency.png --tax-group Chordata # (iv)
+crabs --amplification-efficiency-figure --input merged.txt --amplicons subset.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --output amplification-efficiency-merged.png --tax-group Chordata # (iv)
 crabs --completeness-table --input subset.txt --output completeness.txt --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --species 'Carcharodon carcharias+Squalus acanthias' # (v)
