@@ -3,6 +3,8 @@ conda create -n crabs-env python=3.11.7
 conda activate crabs-env
 # Install CRABS (v.1.9.0.)
 git clone https://github.com/gjeunen/reference_database_creator.git
+cd reference_database_creator
+pip install .
 # Install python packages 
 pip install requests
 pip install rich
@@ -18,20 +20,10 @@ conda install bioconda::clustalw
 conda install bioconda::fasttree
 
 # Check the installation
-crabs -h # In my case shown "command not found" so I needed to add the crabs script in my PATH 
-
-# HOW TO ADD CRABS IN YOUR PATH
-ls -l crabs.py  # Look for crabs.py
-chmod +x crabs  # Make it executable
-./crabs -h # Run directly, if it works you can add in your path permanently
-echo $(pwd)
-export PATH="$PATH:/Users/eduardavalerio/reference_database_creator" # Replace /Users/eduarda...
-source ~/.bashrc # Reload the shell
-crabs -h # Should now work from anywhere
-
+crabs -h 
 
 ################################################################################################################################################
-# Before start check if you're in the right paste to save all the files 
+# Before start check if you're in the right directory to save all the files 
 # I'm gonna use the MitoFish and NCBI databases
 
 # STEP 1 - DOWNLOAD SEQUENCE DATA FROM ONLINE REPOSITORIES AND TAXONOMY FROM NCBI
