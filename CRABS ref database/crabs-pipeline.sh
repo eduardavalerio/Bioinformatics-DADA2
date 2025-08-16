@@ -60,6 +60,9 @@ crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward AAACTCG
 crabs --in-silico-pcr --input merged.txt --output insilico.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --relaxed
 # Results | 7582 amplicons were extracted by only the forward or reverse primer (25.31%)
 
+# If you had a 'OverflowError: FASTA/FASTQ record does not fit into buffer, aborting analysis..' error
+# Follow add the buffer-size parameter https://github.com/gjeunen/reference_database_creator?tab=readme-ov-file#532-parameter---buffer-size 
+
 # STEP 5 - RETRIEVE AMPLICONS WITHOUT PRIMER-BINDING REGIONS - this step take some time 
 crabs --pairwise-global-alignment --input merged.txt --amplicons insilico.txt --output aligned.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --size-select 10000 --percent-identity 0.95 --coverage 95
 
