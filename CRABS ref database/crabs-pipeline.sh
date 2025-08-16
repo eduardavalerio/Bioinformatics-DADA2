@@ -46,7 +46,7 @@ crabs --download-taxonomy --output ncbi_taxonomy #ncbi_taxonomy is a subdirector
 # mitofish
 crabs --import --import-format mitofish --input mitofish.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_mitofish.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 # ncbi - If downloaded 
-crabs --import --import-format ncbi --input nci.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_ncbi.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
+crabs --import --import-format ncbi --input ncbi_fish12s.fasta --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --acc2tax ncbi_taxonomy/nucl_gb.accession2taxid --output crabs_ncbi.txt --ranks 'superkingdom;phylum;class;order;family;genus;species'
 
 # STEP 3 - MERGE DOWLOADED SEQUENCES
 # This step is just when sequence data from multiple online repositories are downloaded. After import the data in crabs format step.
