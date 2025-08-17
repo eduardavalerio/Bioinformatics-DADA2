@@ -101,4 +101,4 @@ crabs --diversity-figure --input subset.txt --output diversity-figure-merged.png
 crabs --amplicon-length-figure --input subset.txt --output amplicon-length-figure-merged.png --tax-level 4 # (ii)
 crabs --phylogenetic-tree --input subset.txt --output phylo --tax-level 4 --species 'Carcharodon carcharias+Squalus acanthias' # (iii)
 crabs --amplification-efficiency-figure --input merged.txt --amplicons subset.txt --forward AAACTCGTGCCAGCCACC --reverse GGGTATCTAATCCCAGTTTG --output amplification-efficiency-merged.png --tax-group Chordata # (iv)
-crabs --completeness-table --input subset.txt --output completeness.txt --names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --species 'Carcharodon carcharias+Squalus acanthias' # (v)
+crabs --completeness-table --input subset.txt --output completeness.csv--names ncbi_taxonomy/names.dmp --nodes ncbi_taxonomy/nodes.dmp --species 'Carcharodon carcharias+Squalus acanthias' # (v)
